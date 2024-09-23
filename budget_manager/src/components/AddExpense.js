@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 
 const AddExpense = ({ addExpense }) => {
-  const [expense, setExpense] = useState({ category: '', amount: 0 });
+  const [expense, setExpense] = useState({ category: '', amount: 0, date: '' });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -12,7 +12,7 @@ const AddExpense = ({ addExpense }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     addExpense(expense);
-    setExpense({ category: '', amount: 0 });
+    setExpense({ category: '', amount: 0, date: '' }); // Reset fields after submission
   };
 
   return (
@@ -23,6 +23,7 @@ const AddExpense = ({ addExpense }) => {
         value={expense.category}
         onChange={handleChange}
         placeholder="Category"
+        required
       />
       <input
         type="number"
@@ -30,6 +31,14 @@ const AddExpense = ({ addExpense }) => {
         value={expense.amount}
         onChange={handleChange}
         placeholder="Amount"
+        required
+      />
+      <input
+        type="date"
+        name="date"
+        value={expense.date}
+        onChange={handleChange}
+        required
       />
       <button type="submit">Add Expense</button>
     </form>

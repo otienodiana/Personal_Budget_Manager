@@ -1,4 +1,3 @@
-// src/components/ChartComponent.js
 import React, { useRef, useEffect } from 'react';
 import Chart from 'chart.js/auto';
 
@@ -8,7 +7,7 @@ const ChartComponent = ({ data }) => {
   useEffect(() => {
     if (chartRef.current) {
       const myChart = new Chart(chartRef.current, {
-        type: 'bar',
+        type: 'pie', 
         data: data,
         options: {
           responsive: true,

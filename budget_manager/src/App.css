@@ -1,38 +1,75 @@
-.App {
-  text-align: center;
+/* General Body Styles */
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #f4f4f4; /* Light gray background */
+  margin: 0;
+  padding: 0;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+/* Main Container */
+.app-container {
+  max-width: 800px; /* Maximum width for the app */
+  margin: 0 auto; /* Center the app */
+  padding: 20px;
+  background: white; /* White background for the app */
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow */
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+/* Title Styles */
+.app-title {
+  text-align: center; /* Center the title */
+  color: #333; /* Dark text */
+  margin-bottom: 20px; /* Space below the title */
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+/* Expense Summary */
+.chart-container {
+  margin-top: 20px; /* Space between the title and the chart */
+  width: 100%; /* Full width of the parent */
+  max-width: 600px; /* Set a max width */
+  height: 200px; /* Set your desired height */
+  background-color: #fff; /* White background for the chart */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow for aesthetics */
+  border-radius: 10px; /* Rounded corners */
+  padding: 20px; /* Padding inside the chart container */
 }
 
-.App-link {
-  color: #61dafb;
+/* Button Styles */
+button {
+  background-color: #007bff; /* Primary color */
+  color: white; /* White text */
+  border: none;
+  border-radius: 5px; /* Rounded corners */
+  padding: 10px 15px; /* Padding for buttons */
+  cursor: pointer; /* Pointer on hover */
+  transition: background-color 0.3s; /* Smooth background transition */
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+button:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+}
+
+/* Alert Styles */
+.budget-alert {
+  color: #dc3545; /* Danger color for alerts */
+  text-align: center; /* Center the alert text */
+  margin: 20px 0; /* Space above and below the alert */
+}
+
+/* Additional Styles for Components */
+h2 {
+  color: #007bff; /* Secondary color for section headers */
+}
+
+.budget-alert {
+  margin-top: 20px;
+}
+
+.alert {
+  background-color: #f8d7da;
+  color: #721c24;
+  padding: 10px;
+  border-radius: 5px;
+  margin: 5px 0;
 }

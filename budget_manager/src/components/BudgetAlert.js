@@ -1,24 +1,28 @@
 // src/components/BudgetAlert.js
 import React from 'react';
 
-const BudgetAlert = ({ expenses }) => {
-  const categoryLimits = {
-    food: 100,
-    entertainment: 50,
-    transport: 75,
-  };
-
-  const alerts = Object.keys(categoryLimits).map(category => {
-    const total = expenses.filter(exp => exp.category === category).reduce((acc, curr) => acc + curr.amount, 0);
-    if (total > categoryLimits[category]) {
-      return <div key={category}>Warning: You have exceeded the budget for {category}!</div>;
-    }
-    return null;
-  });
+const BudgetAlert = ({ expenses, budgetLimits }) => {
+  const totalExpensesByCategory = expenses.reduce((acc, expense) => {
+    acc[expense.category] = (acc[expense.category] || 0) + expense.amount;
+    return acc;
+  }, {});
 
   return (
-    <div>
-      {alerts}
+    <div className="budget-alert">
+      <h2>Budget Alerts</h2>
+      {Object.keys(budgetLimits).map((category) => {
+        const totalSpent = totalExpensesByCategory[category] || 0;
+        const limit = budgetLimits[category];
+
+        if (totalSpent >= limit * 0.8) {
+          return (
+            <div key={category} className="alert">
+              Warning: You have spent ${totalSpent} out of your ${limit} limit for {category}.
+            </div>
+          );
+        }
+        return null;
+      })}
     </div>
   );
 };

@@ -29,40 +29,43 @@
     background: #005f7f; /* Darker shade on hover */
 }
 
-.features {
+.overview {
     margin: 40px 0;
     text-align: center; /* Center text for better alignment */
 }
 
-.feature-list {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-}
-
-.feature {
-    background: #f9f9f9; /* Light background for features */
-    padding: 20px;
-    margin: 10px;
-    border: 1px solid #ddd; /* Light border for separation */
-    border-radius: 8px;
-    width: calc(33% - 40px); /* Adjust width for 3 columns */
-}
-
-@media (max-width: 800px) {
-    .feature {
-        width: calc(50% - 40px); /* 2 columns on smaller screens */
-    }
-}
-
-@media (max-width: 600px) {
-    .feature {
-        width: 100%; /* Full width on very small screens */
-    }
+.overview p {
+    max-width: 600px; /* Limit the width for readability */
+    margin: 0 auto; /* Center the paragraph */
 }
 
 .homepage-footer {
     text-align: center;
     margin-top: 40px;
     color: #777; /* Subtle footer color */
+}
+
+/* Media Queries for responsiveness */
+@media (max-width: 768px) {
+    .homepage-header {
+        padding: 30px 15px; /* Adjust padding for smaller screens */
+    }
+
+    .cta-button {
+        padding: 10px 20px; /* Smaller button on mobile */
+    }
+
+    .overview p {
+        padding: 0 10px; /* Add padding to paragraph for mobile */
+    }
+}
+
+@media (max-width: 480px) {
+    .homepage-header h1 {
+        font-size: 1.8rem; /* Smaller header for mobile */
+    }
+
+    .homepage-header p {
+        font-size: 1rem; /* Smaller text for mobile */
+    }
 }

@@ -6,24 +6,17 @@ const HomePage = () => {
     return (
         <div className="homepage">
             <header className="homepage-header">
-                <h1>Welcome to Budget Manager</h1>
-                <p>Effortlessly manage your finances.</p>
+                <h1>Budget Manager</h1>
+                <p>Your all-in-one solution for tracking and managing your finances.</p>
                 <a href="/add-expense" className="cta-button">Get Started</a>
             </header>
 
-            <section className="features">
-                <h2>Features</h2>
-                <div className="feature-list">
-                    <div className="feature">
-                        <h3>Add Expenses</h3>
-                    </div>
-                    <div className="feature">
-                        <h3>View Expenses</h3>
-                    </div>
-                    <div className="feature">
-                        <h3>Budget Alerts</h3>
-                    </div>
-                </div>
+            <section className="overview">
+                <h2>Overview</h2>
+                <p>
+                    Easily track your expenses, set budgets, and receive alerts to keep your finances in check. 
+                    Visualize your spending habits and make informed decisions to reach your financial goals.
+                </p>
             </section>
 
             <footer className="homepage-footer">

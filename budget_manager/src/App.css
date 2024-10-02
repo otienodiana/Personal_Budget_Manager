@@ -180,3 +180,34 @@ h2 {
   background-color: #f44336;
   color: white;
 }
+
+/* Global Styles */
+html, body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto; /* Centering the content */
+  padding: 0 20px; /* Add some horizontal padding */
+}
+
+h1, h2, h3, p {
+  margin: 0;
+}
+
+/* Media Queries for overall responsiveness */
+@media (max-width: 768px) {
+  .container {
+      padding: 0 10px; /* Less padding on smaller screens */
+  }
+}
+
+@media (max-width: 480px) {
+  h1 {
+      font-size: 1.5rem; /* Smaller header for mobile */
+  }
+}

@@ -12,8 +12,8 @@ const Navbar = () => {
         <li><Link to="/add-expense">MANAGEEXPENSES</Link></li>
         
         <li><Link to="/expense-summary">SUMMARY</Link></li>
-        <li><Link to="/budget-alert">YOURALERTS</Link></li>
-        <li><Link to="/set-budget">YOURLIMITS</Link></li>
+        
+        
       </ul>
     </nav>
   );

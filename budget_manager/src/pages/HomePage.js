@@ -8,7 +8,7 @@ const HomePage = () => {
             <header className="homepage-header">
                 <h1>Budget Manager</h1>
                 <p>Your all-in-one solution for tracking and managing your finances.</p>
-                <a href="/add-expense" className="cta-button">Get Started</a>
+                <a href="#/set-budget" className="cta-button">Get Started</a>
             </header>
 
             <section className="overview">

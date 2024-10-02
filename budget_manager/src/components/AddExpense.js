@@ -1,4 +1,3 @@
-// src/pages/AddExpense.js
 import React, { useState } from 'react';
 
 const AddExpense = ({ addExpense }) => {
@@ -6,7 +5,17 @@ const AddExpense = ({ addExpense }) => {
         name: '',
         amount: '',
         date: '',
+        category: '', 
     });
+
+    const categories = [
+        'Food',
+        'Transportation',
+        'Utilities',
+        'Entertainment',
+        'Health',
+        'Other'
+    ];
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -17,7 +26,7 @@ const AddExpense = ({ addExpense }) => {
         e.preventDefault();
         if (typeof addExpense === 'function') {
             addExpense(expense); // Call the passed function
-            setExpense({ name: '', amount: '', date: '' }); // Reset form fields after submission
+            setExpense({ name: '', amount: '', date: '', category: '' }); // Reset form fields after submission
         } else {
             console.error('addExpense is not a function');
         }
@@ -48,6 +57,17 @@ const AddExpense = ({ addExpense }) => {
                 onChange={handleChange}
                 required
             />
+            <select
+                name="category"
+                value={expense.category}
+                onChange={handleChange}
+                required
+            >
+                <option value="">Select Category</option>
+                {categories.map((cat, index) => (
+                    <option key={index} value={cat}>{cat}</option>
+                ))}
+            </select>
             <button type="submit">Add Expense</button>
         </form>
     );

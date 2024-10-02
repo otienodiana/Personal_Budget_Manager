@@ -6,6 +6,15 @@ const SetBudgetPage = ({ setBudgetLimit, budgetLimits, updateBudgetLimit, delete
   const [date, setDate] = useState('');
   const [editingIndex, setEditingIndex] = useState(null); // Index of the budget limit being edited
 
+  const categories = [
+    'Food',
+    'Transportation',
+    'Utilities',
+    'Entertainment',
+    'Health',
+    'Other'
+  ]; // Define your category options here
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const budgetLimit = {
@@ -42,15 +51,18 @@ const SetBudgetPage = ({ setBudgetLimit, budgetLimits, updateBudgetLimit, delete
 
   return (
     <div className="set-budget-container">
-      <h1>Set_Limit</h1>
+      <h1>Set Limit</h1>
       <form onSubmit={handleSubmit}>
-        <input
-          type="text"
+        <select
           value={category}
           onChange={(e) => setCategory(e.target.value)}
-          placeholder="Enter category"
           required
-        />
+        >
+          <option value="" disabled>Select a category</option>
+          {categories.map((cat, index) => (
+            <option key={index} value={cat}>{cat}</option>
+          ))}
+        </select>
         <input
           type="number"
           value={amount}
@@ -67,7 +79,7 @@ const SetBudgetPage = ({ setBudgetLimit, budgetLimits, updateBudgetLimit, delete
         <button type="submit">{editingIndex !== null ? 'Update Budget' : 'Set Budget'}</button>
       </form>
 
-      <h2>Limits_Lists</h2>
+      <h2>Limits List</h2>
       {budgetLimits.length > 0 ? (
         <table>
           <thead>

@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+
 
 const AddExpensePage = ({ addExpense, expenses, updateExpense, deleteExpense }) => {
   const [category, setCategory] = useState('');
   const [amount, setAmount] = useState('');
   const [date, setDate] = useState('');
   const [editingIndex, setEditingIndex] = useState(null);
-  const navigate = useNavigate();
+  
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -32,7 +32,7 @@ const AddExpensePage = ({ addExpense, expenses, updateExpense, deleteExpense }) 
     setCategory('');
     setAmount('');
     setDate('');
-    navigate('/expense-summary');
+    
   };
 
   const handleEdit = (index) => {

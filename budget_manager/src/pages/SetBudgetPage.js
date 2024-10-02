@@ -42,7 +42,7 @@ const SetBudgetPage = ({ setBudgetLimit, budgetLimits, updateBudgetLimit, delete
 
   return (
     <div className="set-budget-container">
-      <h1>Set Budget Limit</h1>
+      <h1>Set_Limit</h1>
       <form onSubmit={handleSubmit}>
         <input
           type="text"
@@ -67,7 +67,7 @@ const SetBudgetPage = ({ setBudgetLimit, budgetLimits, updateBudgetLimit, delete
         <button type="submit">{editingIndex !== null ? 'Update Budget' : 'Set Budget'}</button>
       </form>
 
-      <h2>Set Budget Limits</h2>
+      <h2>Limits_Lists</h2>
       {budgetLimits.length > 0 ? (
         <table>
           <thead>

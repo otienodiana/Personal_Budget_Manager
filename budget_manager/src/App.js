@@ -1,36 +1,79 @@
-import React, { useReducer } from 'react';
-import AddExpense from './components/AddExpense';
-import ViewExpenses from './components/ViewExpenses';
-import ExpenseSummary from './components/ExpenseSummary';
-import BudgetAlert from './components/BudgetAlert';
-import BudgetLimit from './components/BudgetLimit'; // Import the BudgetLimit component
-import { expenseReducer } from './reducers/expenseReducer';
+// src/App.js
+import React, { useState } from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Navbar from './components/Navbar';
+import HomePage from './pages/HomePage';
+import AddExpensePage from './pages/AddExpensePage';
+import ExpenseSummaryPage from './pages/ExpenseSummaryPage';
+import BudgetAlertPage from './pages/BudgetAlertPage';
+import SetBudgetPage from './pages/SetBudgetPage';
 import './App.css';
 
 const App = () => {
-  const [state, dispatch] = useReducer(expenseReducer, { expenses: [], budgetLimits: {} });
+  const [budgetLimits, setBudgetLimits] = useState([]);
+  const [expenses, setExpenses] = useState([]);
 
-  const addExpense = (expense) => {
-    dispatch({ type: 'ADD_EXPENSE', payload: expense });
+  const setBudgetLimit = (newLimit) => {
+    setBudgetLimits((prevLimits) => [...prevLimits, newLimit]);
   };
 
-  const setBudgetLimit = ({ category, amount }) => {
-    dispatch({ type: 'SET_BUDGET_LIMIT', payload: { category, limit: amount } });
+  const updateBudgetLimit = (index, updatedLimit) => {
+    const newLimits = budgetLimits.map((limit, idx) => (idx === index ? updatedLimit : limit));
+    setBudgetLimits(newLimits);
+  };
+
+  const deleteBudgetLimit = (index) => {
+    const newLimits = budgetLimits.filter((_, idx) => idx !== index);
+    setBudgetLimits(newLimits);
+  };
+
+  const addExpense = (expense) => {
+    setExpenses((prevExpenses) => [...prevExpenses, expense]);
+  };
+
+  const updateExpense = (index, updatedExpense) => {
+    const newExpenses = expenses.map((expense, idx) => (idx === index ? updatedExpense : expense));
+    setExpenses(newExpenses);
+  };
+
+  const deleteExpense = (index) => {
+    const newExpenses = expenses.filter((_, idx) => idx !== index);
+    setExpenses(newExpenses);
   };
 
   return (
-    <div className="app-container">
-      <h1 className="app-title">Personal Budget Manager</h1>
-      <div className="content-container">
-        <AddExpense addExpense={addExpense} />
-        <BudgetLimit setBudgetLimit={setBudgetLimit} /> {/* Add BudgetLimit here */}
-        <ViewExpenses expenses={state.expenses} />
+    <Router>
+      <div>
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route
+            path="/add-expense"
+            element={
+              <AddExpensePage
+                addExpense={addExpense}
+                expenses={expenses}
+                updateExpense={updateExpense}
+                deleteExpense={deleteExpense}
+              />
+            }
+          />
+          <Route path="/expense-summary" element={<ExpenseSummaryPage expenses={expenses} />} />
+          <Route path="/budget-alert" element={<BudgetAlertPage expenses={expenses} budgetLimits={budgetLimits} />} />
+          <Route
+            path="/set-budget"
+            element={
+              <SetBudgetPage
+                setBudgetLimit={setBudgetLimit}
+                budgetLimits={budgetLimits}
+                updateBudgetLimit={updateBudgetLimit}
+                deleteBudgetLimit={deleteBudgetLimit}
+              />
+            }
+          />
+        </Routes>
       </div>
-      <div className="summary-container">
-        <ExpenseSummary expenses={state.expenses} />
-        <BudgetAlert expenses={state.expenses} budgetLimits={state.budgetLimits} />
-      </div>
-    </div>
+    </Router>
   );
 };
 

@@ -1,0 +1,47 @@
+/* src/components/BudgetAlert.css */
+
+.budget-alert-container {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 20px 0;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+}
+
+.budget-alert-title {
+    color: #333;
+    font-size: 24px;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.alert-message {
+    color: #d9534f; /* Bootstrap's danger color */
+    background-color: #f2dede; /* Light red background */
+    padding: 10px;
+    border: 1px solid #ebccd1; /* Red border */
+    border-radius: 4px;
+}
+
+.exceeded-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.exceeded-item {
+    padding: 5px 0;
+    border-bottom: 1px solid #ebccd1;
+}
+
+.exceeded-item:last-child {
+    border-bottom: none; /* Remove bottom border for last item */
+}
+
+.total-expenses {
+    text-align: center;
+    font-weight: bold;
+    color: #5bc0de; /* Bootstrap's info color */
+    margin-top: 10px;
+}

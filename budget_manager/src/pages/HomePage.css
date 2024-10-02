@@ -1,0 +1,68 @@
+/* src/pages/HomePage.css */
+.homepage {
+    font-family: 'Arial', sans-serif;
+    padding: 20px;
+    background-color: #ffffff; /* Light background for cleanliness */
+    color: #333; /* Dark text for readability */
+}
+
+.homepage-header {
+    background: #4CAF50; /* Primary color for header */
+    color: white;
+    padding: 40px 20px;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.cta-button {
+    display: inline-block;
+    padding: 12px 24px;
+    background: #008CBA; /* Button color */
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-top: 20px;
+    transition: background 0.3s;
+}
+
+.cta-button:hover {
+    background: #005f7f; /* Darker shade on hover */
+}
+
+.features {
+    margin: 40px 0;
+    text-align: center; /* Center text for better alignment */
+}
+
+.feature-list {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.feature {
+    background: #f9f9f9; /* Light background for features */
+    padding: 20px;
+    margin: 10px;
+    border: 1px solid #ddd; /* Light border for separation */
+    border-radius: 8px;
+    width: calc(33% - 40px); /* Adjust width for 3 columns */
+}
+
+@media (max-width: 800px) {
+    .feature {
+        width: calc(50% - 40px); /* 2 columns on smaller screens */
+    }
+}
+
+@media (max-width: 600px) {
+    .feature {
+        width: 100%; /* Full width on very small screens */
+    }
+}
+
+.homepage-footer {
+    text-align: center;
+    margin-top: 40px;
+    color: #777; /* Subtle footer color */
+}

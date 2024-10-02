@@ -1,36 +1,61 @@
 import React, { useState } from 'react';
-import './BudgetLimit.css';
 
-const BudgetLimit = ({ setBudgetLimit }) => {
+const BudgetLimit = ({ setBudgetLimit, currentLimit, budgetLimits }) => {
+  const [limit, setLimit] = useState(0);
   const [category, setCategory] = useState('');
-  const [amount, setAmount] = useState('');
+
+  const handleChange = (e) => {
+    if (e.target.name === 'category') {
+      setCategory(e.target.value);
+    } else {
+      setLimit(e.target.value);
+    }
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setBudgetLimit({ category, amount: parseFloat(amount) });
-    setCategory('');
-    setAmount('');
+    setBudgetLimit({ category, amount: limit });
+    setLimit(0); // Clear input after setting limit
+    setCategory(''); // Clear category after setting limit
   };
 
   return (
-    <form onSubmit={handleSubmit} className="budget-limit-form">
+    <div className="budget-limit-container">
       <h2>Set Budget Limit</h2>
-      <input
-        type="text"
-        value={category}
-        onChange={(e) => setCategory(e.target.value)}
-        placeholder="Category"
-        required
-      />
-      <input
-        type="number"
-        value={amount}
-        onChange={(e) => setAmount(e.target.value)}
-        placeholder="Amount"
-        required
-      />
-      <button type="submit">Set Limit</button>
-    </form>
+      <form className="budget-limit-form" onSubmit={handleSubmit}>
+        <input
+          type="text"
+          name="category"
+          value={category}
+          onChange={handleChange}
+          placeholder="Category"
+          required
+        />
+        <input
+          type="number"
+          value={limit}
+          onChange={handleChange}
+          placeholder="Set your budget limit"
+          required
+        />
+        <button type="submit">Set Limit</button>
+      </form>
+
+      <div className="current-limits">
+        <h3>Current Budget Limits:</h3>
+        {budgetLimits && Object.entries(budgetLimits).length > 0 ? (
+          <ul>
+            {Object.entries(budgetLimits).map(([cat, lim]) => (
+              <li key={cat}>
+                {cat}: ${lim}
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p>No limits set.</p>
+        )}
+      </div>
+    </div>
   );
 };
 

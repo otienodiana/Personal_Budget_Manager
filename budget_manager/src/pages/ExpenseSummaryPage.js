@@ -79,7 +79,9 @@ const ExpenseSummaryPage = ({ expenses, budgetLimits, setBudgetLimit, updateBudg
                 onChange={(e) => setSelectedMonth(e.target.value)}
             >
                 {months.map((month, index) => (
-                    <option key={index} value={month.value}>{month.label}</option>
+                    <option key={index} value={month.value}>
+                        {month.label}
+                    </option>
                 ))}
             </select>
 

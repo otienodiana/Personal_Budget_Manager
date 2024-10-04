@@ -5,7 +5,7 @@ const AddExpense = ({ addExpense }) => {
         name: '',
         amount: '',
         date: '',
-        category: '', 
+        category: '',
     });
 
     const categories = [
@@ -14,7 +14,7 @@ const AddExpense = ({ addExpense }) => {
         'Utilities',
         'Entertainment',
         'Health',
-        'Other'
+        'Other',
     ];
 
     const handleChange = (e) => {
@@ -24,12 +24,18 @@ const AddExpense = ({ addExpense }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (typeof addExpense === 'function') {
-            addExpense(expense); // Call the passed function
-            setExpense({ name: '', amount: '', date: '', category: '' }); // Reset form fields after submission
-        } else {
-            console.error('addExpense is not a function');
+
+        // Validate amount
+        if (Number(expense.amount) <= 0) {
+            alert('Amount must be a positive number.');
+            return;
         }
+
+        // Add expense
+        addExpense(expense);
+
+        // Clear the form
+        setExpense({ name: '', amount: '', date: '', category: '' });
     };
 
     return (

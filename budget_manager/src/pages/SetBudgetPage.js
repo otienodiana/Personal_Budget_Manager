@@ -1,114 +1,54 @@
 import React, { useState } from 'react';
 
 const SetBudgetPage = ({ setBudgetLimit, budgetLimits, updateBudgetLimit, deleteBudgetLimit }) => {
-  const [category, setCategory] = useState('');
-  const [amount, setAmount] = useState('');
-  const [date, setDate] = useState('');
-  const [editingIndex, setEditingIndex] = useState(null); // Index of the budget limit being edited
+    const [budget, setBudget] = useState({ category: '', amount: '' });
 
-  const categories = [
-    'Food',
-    'Transportation',
-    'Utilities',
-    'Entertainment',
-    'Health',
-    'Other'
-  ]; // Define your category options here
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const budgetLimit = {
-      category,
-      amount: Number(amount),
-      date,
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setBudget((prev) => ({ ...prev, [name]: value }));
     };
 
-    if (editingIndex !== null) {
-      // Update the existing budget limit
-      updateBudgetLimit(editingIndex, budgetLimit);
-      setEditingIndex(null); // Reset editing index
-    } else {
-      // Add a new budget limit
-      setBudgetLimit(budgetLimit);
-    }
-    
-    clearFields();
-  };
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        setBudgetLimit(budget);
+        setBudget({ category: '', amount: '' });
+    };
 
-  const clearFields = () => {
-    setCategory('');
-    setAmount('');
-    setDate('');
-  };
-
-  const handleEdit = (index) => {
-    const limitToEdit = budgetLimits[index];
-    setCategory(limitToEdit.category);
-    setAmount(limitToEdit.amount);
-    setDate(limitToEdit.date);
-    setEditingIndex(index); // Set the index of the budget limit being edited
-  };
-
-  return (
-    <div className="set-budget-container">
-      <h1>Set Limit</h1>
-      <form onSubmit={handleSubmit}>
-        <select
-          value={category}
-          onChange={(e) => setCategory(e.target.value)}
-          required
-        >
-          <option value="" disabled>Select a category</option>
-          {categories.map((cat, index) => (
-            <option key={index} value={cat}>{cat}</option>
-          ))}
-        </select>
-        <input
-          type="number"
-          value={amount}
-          onChange={(e) => setAmount(e.target.value)}
-          placeholder="Enter budget limit"
-          required
-        />
-        <input
-          type="date"
-          value={date}
-          onChange={(e) => setDate(e.target.value)}
-          required
-        />
-        <button type="submit">{editingIndex !== null ? 'Update Budget' : 'Set Budget'}</button>
-      </form>
-
-      <h2>Limits List</h2>
-      {budgetLimits.length > 0 ? (
-        <table>
-          <thead>
-            <tr>
-              <th>Category</th>
-              <th>Amount</th>
-              <th>Date Set</th>
-              <th>Actions</th> {/* New Actions Column */}
-            </tr>
-          </thead>
-          <tbody>
-            {budgetLimits.map((limit, index) => (
-              <tr key={index}>
-                <td>{limit.category}</td>
-                <td>${limit.amount}</td>
-                <td>{limit.date}</td>
-                <td>
-                  <button onClick={() => handleEdit(index)}>Update</button>
-                  <button onClick={() => deleteBudgetLimit(index)}>Delete</button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      ) : (
-        <p>No budget limits set.</p>
-      )}
-    </div>
-  );
+    return (
+        <div>
+            <h2>Set Budget</h2>
+            <form onSubmit={handleSubmit}>
+                <input
+                    type="text"
+                    name="category"
+                    placeholder="Category"
+                    value={budget.category}
+                    onChange={handleChange}
+                    required
+                />
+                <input
+                    type="number"
+                    name="amount"
+                    placeholder="Amount"
+                    value={budget.amount}
+                    onChange={handleChange}
+                    required
+                />
+                <button type="submit">Set Budget</button>
+            </form>
+            <div>
+                <h3>Current Budget Limits</h3>
+                <ul>
+                    {budgetLimits.map((limit, index) => (
+                        <li key={index}>
+                            {limit.category}: ${limit.amount}
+                            <button onClick={() => deleteBudgetLimit(index)}>Delete</button>
+                        </li>
+                    ))}
+                </ul>
+            </div>
+        </div>
+    );
 };
 
 export default SetBudgetPage;

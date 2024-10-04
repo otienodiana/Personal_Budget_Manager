@@ -1,30 +1,12 @@
-// src/pages/AddExpensePage.js
 import React, { useState } from 'react';
-
-const categories = [
-  'Food',
-  'Transport',
-  'Entertainment',
-  'Utilities',
-  'Health',
-  'Housing',
-  'Insurance',
-  'Education',
-  'Savings',
-  'Other'
-];
-
-const months = [
-  'January', 'February', 'March', 'April', 'May', 'June',
-  'July', 'August', 'September', 'October', 'November', 'December'
-];
+import WeeklySpendingTracker from '../components/WeeklySpendingTracker'; // Import the new component
+import './AddExpensePage.css';
 
 const AddExpensePage = ({ addExpense, expenses, updateExpense, deleteExpense }) => {
-  const [category, setCategory] = useState(categories[0]); // Default to the first category
+  const [category, setCategory] = useState('');
   const [amount, setAmount] = useState('');
   const [date, setDate] = useState('');
   const [editingIndex, setEditingIndex] = useState(null);
-  const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth()); // Default to current month
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -47,7 +29,7 @@ const AddExpensePage = ({ addExpense, expenses, updateExpense, deleteExpense }) 
       addExpense(newExpense);
     }
 
-    setCategory(categories[0]); // Reset to the first category after submission
+    setCategory('');
     setAmount('');
     setDate('');
   };
@@ -64,16 +46,18 @@ const AddExpensePage = ({ addExpense, expenses, updateExpense, deleteExpense }) 
     deleteExpense(index);
   };
 
-  // Function to filter expenses by the selected month
-  const getExpensesByMonth = (month) => {
-    const currentYear = new Date().getFullYear();
-    return expenses.filter(expense => {
-      const expenseDate = new Date(expense.date);
-      return expenseDate.getFullYear() === currentYear && expenseDate.getMonth() === month;
-    });
+  const getCurrentMonthExpenses = (expenses) => {
+    const currentMonth = new Date().getMonth();
+    return expenses.filter(expense => new Date(expense.date).getMonth() === currentMonth);
   };
 
-  const filteredExpenses = getExpensesByMonth(selectedMonth);
+  const getLastMonthExpenses = (expenses) => {
+    const lastMonth = new Date().getMonth() - 1;
+    return expenses.filter(expense => new Date(expense.date).getMonth() === lastMonth);
+  };
+
+  const currentMonthExpenses = getCurrentMonthExpenses(expenses);
+  const lastMonthExpenses = getLastMonthExpenses(expenses);
 
   return (
     <div className="container">
@@ -87,9 +71,13 @@ const AddExpensePage = ({ addExpense, expenses, updateExpense, deleteExpense }) 
             required
             className="input"
           >
-            {categories.map((cat, index) => (
-              <option key={index} value={cat}>{cat}</option>
-            ))}
+            <option value="">Select a category</option>
+            <option value="Food">Food</option>
+            <option value="Transport">Transport</option>
+            <option value="Entertainment">Entertainment</option>
+            <option value="Health">Health</option>
+            <option value="Utilities">Utilities</option>
+            <option value="Other">Other</option>
           </select>
         </div>
         <div className="form-group">
@@ -117,36 +105,58 @@ const AddExpensePage = ({ addExpense, expenses, updateExpense, deleteExpense }) 
         </button>
       </form>
 
-      {/* Dropdown to select month */}
-      <div className="month-selection">
-        <label>Select Month:</label>
-        <select 
-          value={selectedMonth} 
-          onChange={(e) => setSelectedMonth(Number(e.target.value))} // Convert string to number
-          className="month-dropdown"
-        >
-          {months.map((month, index) => (
-            <option key={index} value={index}>{month}</option>
-          ))}
-        </select>
-      </div>
+      {/* Add the Weekly Spending Tracker component */}
+      <WeeklySpendingTracker expenses={expenses} />
 
-      <h3>{months[selectedMonth]} Expenses:</h3>
-      <ul className="expense-list">
-        {filteredExpenses.length > 0 ? (
-          filteredExpenses.map((expense, index) => (
-            <li key={index} className="expense-item">
-              {expense.category}: ${expense.amount.toFixed(2)} on {new Date(expense.date).toLocaleDateString()}
-              <div className="expense-actions">
+      <h3>Current Month Expenses:</h3>
+      <div className="expense-table">
+        <div className="table-header">
+          <div className="header-item">Category</div>
+          <div className="header-item">Amount</div>
+          <div className="header-item">Date</div>
+          <div className="header-item">Actions</div>
+        </div>
+        {currentMonthExpenses.length > 0 ? (
+          currentMonthExpenses.map((expense, index) => (
+            <div key={index} className="table-row">
+              <div className="row-item">{expense.category}</div>
+              <div className="row-item">${expense.amount.toFixed(2)}</div>
+              <div className="row-item">{new Date(expense.date).toLocaleDateString()}</div>
+              <div className="row-item">
                 <button onClick={() => handleEdit(expenses.indexOf(expense))} className="edit-button">Edit</button>
                 <button onClick={() => handleDelete(expenses.indexOf(expense))} className="delete-button">Delete</button>
               </div>
-            </li>
+            </div>
           ))
         ) : (
-          <p className="no-expenses">No expenses added for {months[selectedMonth]}.</p>
+          <p className="no-expenses">No expenses added for this month.</p>
         )}
-      </ul>
+      </div>
+
+      <h3>Last Month Expenses:</h3>
+      <div className="expense-table">
+        <div className="table-header">
+          <div className="header-item">Category</div>
+          <div className="header-item">Amount</div>
+          <div className="header-item">Date</div>
+          <div className="header-item">Actions</div>
+        </div>
+        {lastMonthExpenses.length > 0 ? (
+          lastMonthExpenses.map((expense, index) => (
+            <div key={index} className="table-row">
+              <div className="row-item">{expense.category}</div>
+              <div className="row-item">${expense.amount.toFixed(2)}</div>
+              <div className="row-item">{new Date(expense.date).toLocaleDateString()}</div>
+              <div className="row-item">
+                <button onClick={() => handleEdit(expenses.indexOf(expense))} className="edit-button">Edit</button>
+                <button onClick={() => handleDelete(expenses.indexOf(expense))} className="delete-button">Delete</button>
+              </div>
+            </div>
+          ))
+        ) : (
+          <p className="no-expenses">No expenses added for last month.</p>
+        )}
+      </div>
     </div>
   );
 };

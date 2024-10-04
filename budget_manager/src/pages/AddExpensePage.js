@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import WeeklySpendingTracker from '../components/WeeklySpendingTracker'; // Import the new component
+
 import './AddExpensePage.css';
 
 const AddExpensePage = ({ addExpense, expenses, updateExpense, deleteExpense }) => {
@@ -7,6 +7,10 @@ const AddExpensePage = ({ addExpense, expenses, updateExpense, deleteExpense }) 
   const [amount, setAmount] = useState('');
   const [date, setDate] = useState('');
   const [editingIndex, setEditingIndex] = useState(null);
+  
+  // New state for filtering
+  const [filterCategory, setFilterCategory] = useState('');
+  const [filterDate, setFilterDate] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -46,18 +50,17 @@ const AddExpensePage = ({ addExpense, expenses, updateExpense, deleteExpense }) 
     deleteExpense(index);
   };
 
-  const getCurrentMonthExpenses = (expenses) => {
-    const currentMonth = new Date().getMonth();
-    return expenses.filter(expense => new Date(expense.date).getMonth() === currentMonth);
+  // Function to filter expenses based on category and date
+  const filterExpenses = (expenses) => {
+    return expenses.filter(expense => {
+      const matchesCategory = filterCategory ? expense.category === filterCategory : true;
+      const matchesDate = filterDate ? new Date(expense.date).toLocaleDateString() === new Date(filterDate).toLocaleDateString() : true;
+      return matchesCategory && matchesDate;
+    });
   };
 
-  const getLastMonthExpenses = (expenses) => {
-    const lastMonth = new Date().getMonth() - 1;
-    return expenses.filter(expense => new Date(expense.date).getMonth() === lastMonth);
-  };
-
-  const currentMonthExpenses = getCurrentMonthExpenses(expenses);
-  const lastMonthExpenses = getLastMonthExpenses(expenses);
+  const currentMonthExpenses = filterExpenses(expenses).filter(expense => new Date(expense.date).getMonth() === new Date().getMonth());
+  const lastMonthExpenses = filterExpenses(expenses).filter(expense => new Date(expense.date).getMonth() === new Date().getMonth() - 1);
 
   return (
     <div className="container">
@@ -73,7 +76,7 @@ const AddExpensePage = ({ addExpense, expenses, updateExpense, deleteExpense }) 
           >
             <option value="">Select a category</option>
             <option value="Food">Food</option>
-            <option value="Transport">Transport</option>
+            <option value="Transportation">Transportation</option>
             <option value="Entertainment">Entertainment</option>
             <option value="Health">Health</option>
             <option value="Utilities">Utilities</option>
@@ -106,7 +109,36 @@ const AddExpensePage = ({ addExpense, expenses, updateExpense, deleteExpense }) 
       </form>
 
       {/* Add the Weekly Spending Tracker component */}
-      <WeeklySpendingTracker expenses={expenses} />
+      
+
+      {/* New Filters Section */}
+      {/* New Filters Section */}
+<div className="filter-section">
+  <h3>Filter Expenses:</h3>
+  <div className="filter-group">
+    <div className="filter-item">
+      <label>Filter by Category:</label>
+      <select value={filterCategory} onChange={(e) => setFilterCategory(e.target.value)}>
+        <option value="">All Categories</option>
+        <option value="Food">Food</option>
+        <option value="Transport">Transport</option>
+        <option value="Entertainment">Entertainment</option>
+        <option value="Health">Health</option>
+        <option value="Utilities">Utilities</option>
+        <option value="Other">Other</option>
+      </select>
+    </div>
+    <div className="filter-item">
+      <label>Filter by Date:</label>
+      <input
+        type="date"
+        value={filterDate}
+        onChange={(e) => setFilterDate(e.target.value)}
+      />
+    </div>
+  </div>
+</div>
+
 
       <h3>Current Month Expenses:</h3>
       <div className="expense-table">

@@ -5,7 +5,6 @@ import HomePage from './pages/HomePage';
 import AddExpensePage from './pages/AddExpensePage';
 import ExpenseSummaryPage from './pages/ExpenseSummaryPage';
 import SetBudgetPage from './pages/SetBudgetPage';
-import BudgetAlert from './components/BudgetAlert';
 import './App.css';
 
 const App = () => {
@@ -64,6 +63,13 @@ const App = () => {
         setExpenses(newExpenses);
     };
 
+    const editExpense = (index, updatedExpense) => {
+        const newExpenses = expenses.map((expense, idx) =>
+            idx === index ? updatedExpense : expense
+        );
+        setExpenses(newExpenses);
+    };
+
     return (
         <Router>
             <div>
@@ -72,18 +78,30 @@ const App = () => {
                 <Routes>
                     <Route path="/" element={<HomePage />} />
                     <Route
+                        path="/set-budget"
+                        element={
+                            <SetBudgetPage
+                                setBudgetLimit={setBudgetLimit}
+                                budgetLimits={budgetLimits}
+                                updateBudgetLimit={updateBudgetLimit}
+                                deleteBudgetLimit={deleteBudgetLimit}
+                            />
+                        }
+                    />
+                    <Route
                         path="/add-expense"
                         element={
-                            
+                            budgetLimits.length === 0 ? (
+                                <Navigate to="/set-budget" />
+                            ) : (
                                 <AddExpensePage
                                     addExpense={addExpense}
                                     expenses={expenses}
                                     updateExpense={updateExpense}
                                     deleteExpense={deleteExpense}
+                                    onEdit={editExpense} // Pass the edit function here
                                 />
-                            
-                                
-                            
+                            )
                         }
                     />
                     <Route
@@ -98,19 +116,7 @@ const App = () => {
                             />
                         }
                     />
-                    <Route
-                        path="/set-budget"
-                        element={
-                            <SetBudgetPage
-                                setBudgetLimit={setBudgetLimit}
-                                budgetLimits={budgetLimits}
-                                updateBudgetLimit={updateBudgetLimit}
-                                deleteBudgetLimit={deleteBudgetLimit}
-                            />
-                        }
-                    />
                 </Routes>
-                <BudgetAlert budgetLimits={budgetLimits} expenses={expenses} />
             </div>
         </Router>
     );

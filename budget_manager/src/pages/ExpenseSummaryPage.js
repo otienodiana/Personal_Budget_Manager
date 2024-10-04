@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import ExpenseSummary from '../components/ExpenseSummary';
+import BudgetAlert from '../components/BudgetAlert'; // Import the BudgetAlert component
 
 const ExpenseSummaryPage = ({ expenses, budgetLimits, setBudgetLimit, updateBudgetLimit, deleteBudgetLimit }) => {
     const [category, setCategory] = useState('');
@@ -145,6 +146,9 @@ const ExpenseSummaryPage = ({ expenses, budgetLimits, setBudgetLimit, updateBudg
                     <p>No budget limits set.</p>
                 )}
             </div>
+
+            {/* Add the BudgetAlert component here */}
+            <BudgetAlert budgetLimits={budgetLimits} expenses={expenses} />
         </div>
     );
 };

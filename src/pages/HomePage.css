@@ -1,0 +1,71 @@
+/* src/pages/HomePage.css */
+.homepage {
+    font-family: 'Arial', sans-serif;
+    padding: 20px;
+    background-color: #ffffff; /* Light background for cleanliness */
+    color: #333; /* Dark text for readability */
+}
+
+.homepage-header {
+    background: #4CAF50; /* Primary color for header */
+    color: white;
+    padding: 40px 20px;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.cta-button {
+    display: inline-block;
+    padding: 12px 24px;
+    background: #008CBA; /* Button color */
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-top: 20px;
+    transition: background 0.3s;
+}
+
+.cta-button:hover {
+    background: #005f7f; /* Darker shade on hover */
+}
+
+.overview {
+    margin: 40px 0;
+    text-align: center; /* Center text for better alignment */
+}
+
+.overview p {
+    max-width: 600px; /* Limit the width for readability */
+    margin: 0 auto; /* Center the paragraph */
+}
+
+.homepage-footer {
+    text-align: center;
+    margin-top: 40px;
+    color: #777; /* Subtle footer color */
+}
+
+/* Media Queries for responsiveness */
+@media (max-width: 768px) {
+    .homepage-header {
+        padding: 30px 15px; /* Adjust padding for smaller screens */
+    }
+
+    .cta-button {
+        padding: 10px 20px; /* Smaller button on mobile */
+    }
+
+    .overview p {
+        padding: 0 10px; /* Add padding to paragraph for mobile */
+    }
+}
+
+@media (max-width: 480px) {
+    .homepage-header h1 {
+        font-size: 1.8rem; /* Smaller header for mobile */
+    }
+
+    .homepage-header p {
+        font-size: 1rem; /* Smaller text for mobile */
+    }
+}
